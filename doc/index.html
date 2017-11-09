@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Dapp Demo</title>
+</head>
+
+<body>
+  <h1 id="h1"> Dapp API Example</h1>
+
+  <img src="data:image/png;base64,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"
+  />
+  <i>Use imToken2.0 DApp browser scan this qrCode to view exmaple.</i>
+
+  <section>
+    <button id="alert">alert</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+          imToken.callAPI('alert', 'winner winner, chicken dinner！')
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="close">close</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+          imToken.callAPI('close')
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="goBack">goBack</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+          imToken.callAPI('goBack')
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="toggleNavbar">toggleNavbar</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+          imToken.callAPI('toggleNavbar')
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
+    <button id="setClipboard">setClipboard</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+ imToken.callAPI('setClipboard', 'are you ok?')
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="share">share</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+ imToken.callAPI('share', {
+    title: 'dapp example',
+    message: 'this is example of dapp sdk',
+    url: location.href,
+  }, function (err, ret) {
+    if(err) {
+      alert('user not share')
+    } else {
+      alert('shared')
+    }
+  })
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="scan">scan</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+ imToken.callAPI('scan', null, function (err, ret) {
+    if(err) {
+      alert(err)
+    } else {
+      alert(ret)
+    }
+  })
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
+    <button id="setCalEvent">setCalEvent</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('setCalEvent', {
+    title: 'test save event',
+    settings : {
+      notes: 'go to china this night',
+      startDate: '2017-09-28T19:42:00.000Z',
+      endDate: '2017-09-28T09:19:44.000Z',
+      alarms: [{
+        date: -1 //ios only
+      }]
+    }
+  }, function(err, id) {
+    if(err) {
+      alert(err)
+    } else {
+      alert(id)
+    }
+  })
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
+    <button id="routeTo">routeTo</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('routeTo', 'Profile')
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
+    <button id="createPay">createPay</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+  var params = {
+    contractAddress: '0x0000000000000000000000000000000000000000',
+    to: '0x0fa38abec02bd4dbb87f189df50b674b9db0b468',
+    from: web3.eth.defaultAccount,
+    value: '1250000000000000',
+    orderInfo: 'buy a cup of coffee',
+    customizable: true,
+  }
+
+  imToken.callAPI('createPay', params, function (err, hash) {
+    if (err) {
+      alert(err)
+    } else {
+      alert(hash)
+    }
+  })
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
+    <button id="getCurrentAccount">getCurrentAccount</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+  imToken.callAPI('getCurrentAccount', null, function(err, address) {
+    if(err) {
+      alert(err)
+    } else {
+      alert(address)
+    }
+  })
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
+    <button id="getAccountList">getAccountList</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('getAccountList', '', function(err, list) {
+    if(err) {
+      alert(err)
+    } else {
+      alert(list)
+    }
+   })
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="getAssetTokens">getAssetTokens</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+  imToken.callAPI('getAssetTokens', null, function(err, assetTokens){
+    if(err) {
+      alert(err)
+    } else {
+       alert(assetTokens.map(function(t){
+        return t.symbol + ' '
+      }))
+    }
+  })
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="showAccountSwitch">showAccountSwitch</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('showAccountSwitch', {
+     contractAddress: '0x0000000000000000000000000000000000000000',
+   }, function(err, address) {
+     if(err) {
+       alert(err)
+     } else {
+       alert(address)
+     }
+   })
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="getContacts">getContacts</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('getContacts', null, function(err, contacts) {
+     if(err) {
+       alert(err)
+     } else {
+       alert(contacts)
+     }
+   })
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
+    <button id="getCurrentLanguage">getCurrentLanguage</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('getCurrentLanguage', null, function(err, language) {
+     if(err) {
+       alert(err)
+     } else {
+       alert(language)
+     }
+   })
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="getCurrentCurrency">getCurrentCurrency</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('getCurrentCurrency', null, function(err, currency) {
+     if(err) {
+       alert(err)
+     } else {
+       alert(currency)
+     }
+   })
+      </pre>
+    </details>
+  </section>
+
+  <section>
+    <button id="getUserProfile">getUserProfile</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('getUserProfile', null, function(err, profile) {
+     if(err) {
+       alert(err)
+     } else {
+       alert(profile)
+     }
+   })
+      </pre>
+    </details>
+  </section>
+</body>
+
+</html>
