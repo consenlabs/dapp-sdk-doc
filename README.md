@@ -21,9 +21,9 @@ imToken DApp SDK only expose one public method `callAPI`, API invoke should alwa
 
 > `imToken.callAPI(apiName, params, callback)` 
 
-*apiName* is which api you want to call, you can see the available apiNames below.
-*params* is the params will pass to apiName
-*callback* is a callback function, which follow NodeJS style, the first param pass to callback function is always `err` (for keep simple, it just a string message), and the second param is the result return by *apiName*.  
+- *apiName* is which api you want to call, you can see the available apiNames below.
+- *params* is the params will pass to apiName
+- *callback* is a callback function, which follow NodeJS style, the first param pass to callback function is always `err` (for keep simple, it just a string message), and the second param is the result return by *apiName*.  
 
 
 ## Example
@@ -79,7 +79,9 @@ imToken.callAPI('goBack')
 ```
 
 ### toggleNavbar
-> by default, imToken will and a navbar out of dapp webview, so the user can control the webview navigation (like close、goBack、reload、share..)， if you implement your own navbar in webview, you can hide default navbar by `toggleNavbar`. 
+> by default, imToken will and a navbar out of dapp webview
+  so the user can control the webview navigation (like close、goBack、reload、share..)
+  if you implement your own navbar in webview, you can hide default navbar by `toggleNavbar`. 
 
 
 ```typescript
