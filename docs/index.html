@@ -4,6 +4,41 @@
 <head>
   <meta charset="utf-8">
   <title>Dapp Demo</title>
+  <style>
+    h1 {
+      font-size: 20px;
+    }
+
+    a {
+      display: block;
+      font-size: 20px;
+      margin-top: 40px;
+    }
+
+    img {
+      display: block;
+    }
+
+    section {
+      background: #eee;
+      margin: 20px 10px;
+      padding: 10px;
+    }
+
+    section button {
+      margin-bottom: 10px;
+    }
+
+    section pre {
+      padding: 10px;
+      overflow: auto;
+      font-size: 16;
+      line-height: 1.45;
+      background-color: #f6f8fa;
+      border-radius: 3px;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,7 +53,7 @@
     <details>
       <summary>show code</summary>
       <pre>
-          imToken.callAPI('alert', 'winner winner, chicken dinner！')
+imToken.callAPI('alert', 'winner winner, chicken dinner！')
       </pre>
     </details>
   </section>
@@ -28,7 +63,7 @@
     <details>
       <summary>show code</summary>
       <pre>
-          imToken.callAPI('close')
+  imToken.callAPI('close')
       </pre>
     </details>
   </section>
@@ -38,7 +73,7 @@
     <details>
       <summary>show code</summary>
       <pre>
-          imToken.callAPI('goBack')
+  imToken.callAPI('goBack')
       </pre>
     </details>
   </section>
@@ -48,7 +83,7 @@
     <details>
       <summary>show code</summary>
       <pre>
-          imToken.callAPI('toggleNavbar')
+imToken.callAPI('toggleNavbar')
       </pre>
     </details>
   </section>
@@ -299,5 +334,182 @@ imToken.callAPI('getUserProfile', null, function(err, profile) {
     </details>
   </section>
 </body>
+
+<script>
+  window.alert = function log(str) {
+    imToken.callAPI('alert', JSON.stringify(str))
+  }
+
+
+  document.getElementById('alert').onclick = function () {
+    imToken.callAPI('alert', 'winner winner, chicken dinner！')
+  }
+
+
+  document.getElementById('close').onclick = function () {
+    imToken.callAPI('close')
+  }
+
+  document.getElementById('goBack').onclick = function () {
+    imToken.callAPI('goBack')
+  }
+
+  document.getElementById('toggleNavbar').onclick = function () {
+    imToken.callAPI('toggleNavbar')
+  }
+
+  document.getElementById('share').onclick = function () {
+    imToken.callAPI('share', {
+      title: 'dapp example',
+      message: 'this is example of dapp sdk',
+      url: location.href,
+    }, function (err, ret) {
+      if (err) {
+        alert('user not share')
+      } else {
+        alert('shared')
+      }
+    })
+  }
+
+  document.getElementById('scan').onclick = function () {
+    imToken.callAPI('scan', null, function (err, ret) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(ret)
+      }
+    })
+  }
+
+  document.getElementById('setCalEvent').onclick = function () {
+    imToken.callAPI('setCalEvent', {
+      title: 'test save event',
+      settings: {
+        notes: 'notes',
+        startDate: '2017-09-28T19:42:00.000Z',
+        endDate: '2017-09-28T09:19:44.000Z',
+        alarms: [{
+          date: -1
+        }]
+      }
+    }, function (err, result) {
+      alert(result)
+    })
+  }
+
+  document.getElementById('routeTo').onclick = function () {
+    imToken.callAPI('routeTo', 'Profile')
+  }
+
+  document.getElementById('createPay').onclick = function () {
+
+    var params = {
+      contractAddress: '0x0000000000000000000000000000000000000000',
+      to: '0x0fa38abec02bd4dbb87f189df50b674b9db0b468',
+      from: web3.eth.defaultAccount,
+      value: '1250000000000000',
+      orderInfo: 'buy a cup of coffee',
+      customizable: true,
+    }
+
+    imToken.callAPI('createPay', params, function (err, hash) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(hash)
+      }
+    })
+  }
+
+  document.getElementById('getCurrentAccount').onclick = function () {
+    imToken.callAPI('getCurrentAccount', null, function (err, address) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(address)
+      }
+    })
+  }
+
+  document.getElementById('getAccountList').onclick = function () {
+    imToken.callAPI('getAccountList', '', function (err, list) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(list.join(' / '))
+      }
+    })
+  }
+
+
+  document.getElementById('getAssetTokens').onclick = function () {
+    imToken.callAPI('getAssetTokens', null, function (err, assetTokens) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(assetTokens.map(function (t) {
+          return t.symbol + ' '
+        }))
+      }
+    })
+  }
+
+
+  document.getElementById('showAccountSwitch').onclick = function () {
+    imToken.callAPI('showAccountSwitch', {
+      contractAddress: '0x0000000000000000000000000000000000000000',
+    }, function (err, address) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(address)
+      }
+    })
+  }
+
+
+  document.getElementById('getContacts').onclick = function () {
+    imToken.callAPI('getContacts', null, function (err, contacts) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(contacts)
+      }
+    })
+  }
+
+  document.getElementById('getCurrentLanguage').onclick = function () {
+    imToken.callAPI('getCurrentLanguage', null, function (err, language) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(language)
+      }
+    })
+  }
+
+  document.getElementById('getCurrentCurrency').onclick = function () {
+    imToken.callAPI('getCurrentCurrency', null, function (err, currency) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(currency)
+      }
+    })
+  }
+
+
+  document.getElementById('getUserProfile').onclick = function () {
+    imToken.callAPI('getUserProfile', null, function (err, profile) {
+      if (err) {
+        alert(err)
+      } else {
+        alert(profile)
+      }
+    })
+  }
+
+</script>
 
 </html>
