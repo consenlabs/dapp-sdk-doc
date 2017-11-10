@@ -3,16 +3,23 @@
 ### web3
 When imToken browser load DApp, we inject `web3.js` into DApp webiew automatic, so the `web3.js` import by DApp is not necessary, you can read web3 object from `window.web3`.
 
+By default, we set user's current Wallet addrsss as the value of `web3.eth.defaultAccount`.
 We also set the web3 provider as the same setting of imToken.
+
 
 ### imToken
 imToken SDK add a namespace `imToken` to window object in DApp webview, because of the injected web3 and sdk are injected after webview loaded, your code (which invoke web3 or sdk) should run after sdk script injected. 
 
-We provide a `sdkReady` event which will emit after injected. you can listen this event on `window` object:
+Before invoke imToken SDK API and the injected `web3`, You should check if `imToken` namespace exist. We provide a `sdkReady` event which will emit after injected. you can listen this event on `window` object:
 ```
-window.addEventListener('sdkReady', function() {
-  // do what you want to do
-})
+if(window.imToken) {
+  // run your code
+} else {
+  window.addEventListener('sdkReady', function() {
+    // run your code
+  })
+}
+
 ```
 
 ### callAPI
@@ -292,7 +299,8 @@ imToken.callAPI('getAccountList', null, function(err, list) {
 
 ### getAssetTokens
 > get user's assetToken list
-**need permission**: if user refused, you will get an err: 'user refused'.
+>
+> **need permission**: if user refused, you will get an err: 'user refused'.
 
 ```typescript
 //@types
@@ -341,7 +349,8 @@ imToken.callAPI('getAssetTokens', null, function(err, assetTokens){
 
 ### getContacts
 > get wallet contacts of user
-**need permission**: if user refused, you will get an err: 'user refused'.
+>
+> **need permission**: if user refused, you will get an err: 'user refused'.
 
 ```typescript
 //@types
@@ -405,7 +414,8 @@ imToken.callAPI('getCurrentCurrency', null, function(err, currency) {
 
 ### getUserProfile
 > get user profile, like username、avatar、kyc info...
-**need permission**: if user refused, you will get an err: 'user refused'.
+>
+> **need permission**: if user refused, you will get an err: 'user refused'.
 
 ```typescript
 //@types

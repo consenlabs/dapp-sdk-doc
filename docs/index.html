@@ -340,6 +340,14 @@ imToken.callAPI('getUserProfile', null, function(err, profile) {
     imToken.callAPI('alert', JSON.stringify(str))
   }
 
+  if (window.imToken) {
+    alert('imToken ready')
+  } else {
+    window.addEventListener('sdkReady', function () {
+      alert('imToken sdk ready')
+    })
+  }
+
 
   document.getElementById('alert').onclick = function () {
     imToken.callAPI('alert', 'winner winner, chicken dinner！')
