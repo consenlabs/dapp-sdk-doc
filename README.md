@@ -1,16 +1,16 @@
 ## Overview
 
 ### web3
-When imToken browser load DApp, we inject `web3.js` into DApp webiew automatic, so the `web3.js` import by DApp is not necessary, you can read web3 object from `window.web3`.
+When imToken DApp browser load DApp page, we inject `web3.js` into DApp webiew automatically, so the `web3.js` imported by DApp is not necessary, you can access web3 object from `window.web3`.
 
-By default, we set user's current Wallet addrsss as the value of `web3.eth.defaultAccount`.
+By default, we set user's current wallet addrsss as the value of `web3.eth.defaultAccount`.
 We also set the web3 provider as the same setting of imToken.
 
 
 ### imToken
-imToken SDK add a namespace `imToken` to window object in DApp webview, because of the injected web3 and sdk are injected after webview loaded, your code (which invoke web3 or sdk) should run after sdk script injected. 
+imToken SDK add a namespace `imToken` to window object in DApp webview, because of the web3 file and SDK file are injected **after** webview loaded, your code (which will invoke web3 and SDK) should run after SDK script injected. 
 
-Before invoke imToken SDK API and the injected `web3`, You should check if `imToken` namespace exist. We provide a `sdkReady` event which will emit after injected. you can listen this event on `window` object:
+Before invoke imToken SDK API and the injected `web3`, You should check if `imToken` namespace is exist. We provide a `sdkReady` event which will emit after injected. you can listen this event on `window` object:
 ```
 if(window.imToken) {
   // run your code
@@ -19,19 +19,29 @@ if(window.imToken) {
     // run your code
   })
 }
-
 ```
 
 ### callAPI
 
-imToken DApp SDK only expose one public method `callAPI`, API invoke should always code as this format :
+imToken DApp SDK expose an public method `callAPI`, API invoke should always code as this format :
 
-> `imToken.callAPI(apiName, params, callback)` 
+```js
+imToken.callAPI(apiName, params, callback)
+```
 
 - *apiName* is which api you want to call, you can see the available apiNames below.
-- *params* is the params will pass to apiName
-- *callback* is a callback function, which follow NodeJS style, the first param pass to callback function is always `err` (for keep simple, it just a string message), and the second param is the result return by *apiName*.  
+- *params* (optional) is the params will pass to apiName
+- *callback* (optional) is a callback function, which follow NodeJS style, the first param pass to callback function is always `err` (if no error occured, `err` is `null`, otherwise it's an object with a message property), and the second param is the result return by *apiName*.  
 
+There is anthor public method `callPromisifyAPI` which do the same thing as `callAPI`, this maybe useful if you want to call api as Promise style:
+```js
+imToken.callPromisifyAPI(apiName, params).then(result => 
+  console.log(result)
+).catch(err => {
+  console.error(err)
+})
+```
+*📌 your DApp page should include a Promise polyfill already!*
 
 ## Example
 
@@ -42,96 +52,75 @@ You can find the api example [here](https://consenlabs.github.io/dapp-sdk-doc/in
 
 Because of *apiName* is always string, we will only explain the *params* and *callback*.
 
-### alert
+### native.alert
 > display an native `alert` to show a message, like window.alert.
 
 ```typescript
-//@types
+// @types
   params: string
-  callback: null
 ```
-
-```
-//@example
-imToken.callAPI('alert', 'winner winner, chicken dinner！')
-```
-
-### close
-> close current dapp webview
-
-```typescript
-//@types
-  params: null
-  callback: null
-```
-
-```
-//@example
-imToken.callAPI('close')
-```
-
-### goBack
-> go to prev history of current webview, like history.go(-1)
-if no prev history, close current dapp webview
-
-```typescript
-//@types
-  params: null
-  callback: null
-```
-
-```
-//@example
-imToken.callAPI('goBack')
-```
-
-### toggleNavbar
-> by default, imToken will and a navbar out of dapp webview
-  so the user can control the webview navigation (like close、goBack、reload、share..)
-  if you implement your own navbar in webview, you can hide default navbar by `toggleNavbar`. 
-
-
-```typescript
-//@types
-  params: null
-  callback: null
-```
-
 
 ```js
-//@example
-imToken.callAPI('toggleNavbar')
+// @example
+imToken.callAPI('native.alert', 'winner winner, chicken dinner！')
 ```
 
-### setClipboard
+### native.confirm
+> display an native `confirm` dialog, like window.confirm.
+
+```typescript
+// @types
+  params: {
+    title: string
+    message: string
+    cancelText: string
+    confirmText: string
+  }
+```
+
+```js
+// @example
+imToken.callAPI('native.confirm', {
+  title: 'quick question',
+  message: 'is imToken the best useful wallet?',
+  cancelText: 'no',
+  confirmText: 'yes',
+}, function(err, result) {
+  if(err) {
+    console.log('no')
+  } else {
+    console.log('yes')
+  }
+})
+```
+
+### native.setClipboard
 > set text to user clipboard
 ```typescript
 //@types
   params: string
-  callback: null
 ```
 
 ```js
-//@example
+// @example
 imToken.callAPI('setClipboard', 'are you ok?')
 ```
 
-### share
+### native.share
 > open native share component
 
 ```typescript
-//@types
+// @types
   params:  {
       title: string,
       message: string,
       url: string
     }
-  callback: null
 ```
 
 ```js
-//@example
-imToken.callAPI('share', {
+// @example
+imToken.callAPI('native.share', {
     title: 'dapp example',
     message: 'this is example of dapp sdk',
     url: location.href,
@@ -145,31 +134,30 @@ imToken.callAPI('share', {
       
 ```
 
-### scan
+### native.scanQRCode
 > open an scanner to scan QRCode, return string content of QRCode
 
 ```typescript
 //@types
-  params:  null
   callback: function
 ```
 
 ```js
-//@example
- imToken.callAPI('scan', null, function (err, ret) {
+// @example
+ imToken.callAPI('scanQRCode', function (err, text) {
     if(err) {
       alert(err)
     } else {
-      alert(ret)
+      alert(text)
     }
   })
 ```
 
-### setCalEvent
+### native.setCalEvent
 > create an calEvent
 
 ```typescript
-//@types
+// @types
   params:  {
     title: string,
     settings: {
@@ -181,12 +169,11 @@ imToken.callAPI('share', {
       }]
     }
   }
-  callback: function
 ```
 
 ```js
 //@example
-imToken.callAPI('setCalEvent', {
+imToken.callAPI('native.setCalEvent', {
     title: 'test save event',
     settings : {
       notes: 'go to china this night',
@@ -205,26 +192,53 @@ imToken.callAPI('setCalEvent', {
   })
 ```
 
-### routeTo
+### navigator.close
+> close current dapp webview
+
+```js
+// @example
+imToken.callAPI('navigator.close')
+```
+
+### navigator.goBack
+> go to prev history of current webview, like history.go(-1)
+> if no prev history, close current dapp webview
+
+```js
+// @example
+imToken.callAPI('navigator.goBack')
+```
+
+### navigator.toggleNavbar
+> by default, imToken will and a navbar out of dapp webview.
+> so the user can control the webview navigation (like close、goBack、reload、share..)
+> if you implement your own navbar in webview, you can hide default navbar by `toggleNavbar`. 
+
+
+```js
+// @example
+imToken.callAPI('navigator.toggleNavbar')
+```
+
+### navigator.routeTo
 > routeTo a specific imToken screen
 
 ```typescript
-//@types
+// @types
   params:  string
-  callback: null
 ```
 
 ```js
-//@example
-imToken.callAPI('routeTo', 'Profile')
+// @example
+imToken.callAPI('navigator.routeTo', 'Profile')
       
 ```
 
-### createPay
+### transaction.tokenPay
 > open an imToken pay modal to send a transaction
 
 ```typescript
-//@types
+// @types
   params:  {
     contractAddress: string,
     to: string,
@@ -233,11 +247,10 @@ imToken.callAPI('routeTo', 'Profile')
     orderInfo: string, // pay modal title
     customizable: boolean, // control if user can change payer wallet, and custom gas
   }
-  callback: function
 ```
 
 ```js
-//@example
+// @example
 var params = {
     contractAddress: '0x0000000000000000000000000000000000000000',
     to: '0x0fa38abec02bd4dbb87f189df50b674b9db0b468',
@@ -247,26 +260,26 @@ var params = {
     customizable: true,
   }
 
-  imToken.callAPI('createPay', params, function (err, hash) {
+  imToken.callAPI('transaction.tokenPay', params, function (err, hash) {
     if (err) {
       alert(err)
     } else {
+      // return txHash of this transaction
       alert(hash)
     }
   })
 ```
 
-### getCurrentAccount
+### user.getCurrentAccount
 > get current wallet address
 ```typescript
-//@types
-  params:  null
+// @types
   callback: function
 ```
 
 ```js
 //@example
-imToken.callAPI('getCurrentAccount', null, function(err, address) {
+imToken.callAPI('user.getCurrentAccount', function(err, address) {
     if(err) {
       alert(err)
     } else {
@@ -276,18 +289,17 @@ imToken.callAPI('getCurrentAccount', null, function(err, address) {
       
 ```
 
-#### getAccountList
+#### user.getAccountList
 > get user's wallet address list
 
 ```typescript
-//@types
-  params:  null
+// @types
   callback: function
 ```
 
 ```js
 //@example
-imToken.callAPI('getAccountList', null, function(err, list) {
+imToken.callAPI('user.getAccountList', function(err, list) {
     if(err) {
       alert(err)
     } else {
@@ -297,20 +309,13 @@ imToken.callAPI('getAccountList', null, function(err, list) {
        
 ```     
 
-### getAssetTokens
+### user.getAssetTokens
 > get user's assetToken list
->
 > **need permission**: if user refused, you will get an err: 'user refused'.
 
-```typescript
-//@types
-  params:  null
-  callback: function
-```
-
 ```js
-//@example
-imToken.callAPI('getAssetTokens', null, function(err, assetTokens){
+// @example
+imToken.callAPI('user.getAssetTokens', function(err, assetTokens){
     if(err) {
       alert(err)
     } else {
@@ -321,7 +326,7 @@ imToken.callAPI('getAssetTokens', null, function(err, assetTokens){
   }) 
 ```  
 
-### showAccountSwitch
+### user.showAccountSwitch
 
 > open a wallet switch modal
 return a wallet address depend on which user selected.
@@ -331,36 +336,26 @@ return a wallet address depend on which user selected.
   params:  {
     contractAddress: string // pass a token contractAddress, only show wallets which has this token
   }
-  callback: function
 ```
 
 ```js
-//@example
-imToken.callAPI('getAssetTokens', null, function(err, assetTokens){
+// @example
+imToken.callAPI('user.showAccountSwitch', function(err, address){
     if(err) {
       alert(err)
     } else {
-       alert(assetTokens.map(function(t){
-        return t.symbol + ' '
-      }))
+      alert(address)
     }
   }) 
 ```  
 
-### getContacts
+### user.getContacts
 > get wallet contacts of user
->
 > **need permission**: if user refused, you will get an err: 'user refused'.
-
-```typescript
-//@types
-  params: null
-  callback: function
-```
 
 ```js
 //@example
-imToken.callAPI('getContacts', null, function(err, contacts) {
+imToken.callAPI('user.getContacts', function(err, contacts) {
      if(err) {
        alert(err)
      } else {
@@ -370,19 +365,40 @@ imToken.callAPI('getContacts', null, function(err, contacts) {
       
 ```  
 
-### getCurrentLanguage
+### user.getProfile
+> get user profile, like username、avatar、kyc info...
+>
+> **need permission**: if user refused, you will get an err: 'user refused'.
 
-> get current language of imToken, if your dapp need to support multi-language, maybe this info is useful.
-
-```typescript
-//@types
-  params: null
-  callback: function
-```
 
 ```js
-//@example
-imToken.callAPI('getCurrentLanguage', null, function(err, language) {
+// @example
+imToken.callAPI('user.getProfile', function(err, profile) {
+  // TODO: profile detail
+     if(err) {
+       alert(err)
+     } else {
+       alert(profile)
+     }
+   })
+```  
+
+### device.getCurrentLanguage
+
+> if your dapp need to support multi-language, maybe this info is useful
+> we already and locale param to your dapp url, most time you no need to call this api.
+
+*available locale:*
+- zh-CN
+- en-US
+- zh-Hant-US
+- zh-Hant-HK
+- zh-Hant-TW
+
+
+```js
+// @example
+imToken.callAPI('device.getCurrentLanguage', function(err, language) {
      if(err) {
        alert(err)
      } else {
@@ -391,19 +407,20 @@ imToken.callAPI('getCurrentLanguage', null, function(err, language) {
    })
 ```  
 
-### getCurrentCurrency
+### device.getCurrentCurrency
 
-> get current currency of imToken, if your dapp need to support multi-language, maybe this info is useful.
+> get current currency of imToken, if your dapp need to support multi-language, maybe this info is useful
+> we already and currency param to your dapp url, most time you no need to call this api.
 
-```typescript
-//@types
-  params: null
-  callback: function
-```
+*available currency:*
+- CNY
+- USD
+- TWD
+- HKD
 
 ```js
 //@example
-imToken.callAPI('getCurrentCurrency', null, function(err, currency) {
+imToken.callAPI('device.getCurrentCurrency', function(err, currency) {
      if(err) {
        alert(err)
      } else {
@@ -412,26 +429,3 @@ imToken.callAPI('getCurrentCurrency', null, function(err, currency) {
    })
 ```  
 
-### getUserProfile
-> get user profile, like username、avatar、kyc info...
->
-> **need permission**: if user refused, you will get an err: 'user refused'.
-
-```typescript
-//@types
-  params: null
-  callback: function
-```
-
-```js
-//@example
-imToken.callAPI('getUserProfile', null, function(err, profile) {
-  // TODO: profile detail
-     if(err) {
-       alert(err)
-     } else {
-       alert(profile)
-     }
-   })
-      
-```  
