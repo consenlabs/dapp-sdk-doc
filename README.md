@@ -66,7 +66,7 @@ imToken.callAPI('native.alert', 'winner winner, chicken dinner！')
 ```
 
 ### native.confirm
-> display an native `confirm` dialog, like window.confirm.
+> display an native `confirm` dialog, like window.confirm, if user click the button, will return an error to callback function.
 
 ```typescript
 // @types
@@ -135,18 +135,13 @@ imToken.callAPI('native.share', {
 ```
 
 ### native.scanQRCode
-> open an scanner to scan QRCode, return string content of QRCode
-
-```typescript
-//@types
-  callback: function
-```
+> open an scanner to scan QRCode, return string content of QRCode.
 
 ```js
 // @example
  imToken.callAPI('scanQRCode', function (err, text) {
     if(err) {
-      alert(err)
+      alert(err.message)
     } else {
       alert(text)
     }
@@ -164,9 +159,6 @@ imToken.callAPI('native.share', {
       notes: string,
       startDate: string,
       endDate: string,
-      alarms?: [{   // ios only
-        date: number
-      }]
     }
   }
 ```
@@ -179,29 +171,27 @@ imToken.callAPI('native.setCalEvent', {
       notes: 'go to china this night',
       startDate: '2017-09-28T19:42:00.000Z',
       endDate: '2017-09-28T09:19:44.000Z',
-      alarms: [{
-        date: -1 //ios only
-      }]
     }
   }, function(err, id) {
     if(err) {
-      alert(err)
+      alert(err.message)
     } else {
       alert(id)
     }
   })
 ```
 
-### navigator.close
+### navigator.closeDapp
 > close current dapp webview
 
 ```js
 // @example
-imToken.callAPI('navigator.close')
+imToken.callAPI('navigator.closeDapp')
 ```
 
 ### navigator.goBack
 > go to prev history of current webview, like history.go(-1)
+>
 > if no prev history, close current dapp webview
 
 ```js
@@ -210,9 +200,11 @@ imToken.callAPI('navigator.goBack')
 ```
 
 ### navigator.toggleNavbar
-> by default, imToken will and a navbar out of dapp webview.
-> so the user can control the webview navigation (like close、goBack、reload、share..)
-> if you implement your own navbar in webview, you can hide default navbar by `toggleNavbar`. 
+> by default, imToken anded a navbar on top of dapp webview outside.
+>
+> so users can control the webview navigation (like close、goBack、reload、share..)
+>
+> if you implement your own navbar in webview, you can hide the default navbar by call `toggleNavbar`. 
 
 
 ```js
@@ -220,22 +212,8 @@ imToken.callAPI('navigator.goBack')
 imToken.callAPI('navigator.toggleNavbar')
 ```
 
-### navigator.routeTo
-> routeTo a specific imToken screen
-
-```typescript
-// @types
-  params:  string
-```
-
-```js
-// @example
-imToken.callAPI('navigator.routeTo', 'Profile')
-      
-```
-
 ### transaction.tokenPay
-> open an imToken pay modal to send a transaction
+> open an imToken pay modal to send a transaction, if pay success, will return the txHash to callback function.
 
 ```typescript
 // @types
@@ -245,7 +223,7 @@ imToken.callAPI('navigator.routeTo', 'Profile')
     from: string, 
     value: string, // bigNumber string,  unit in decimal
     orderInfo: string, // pay modal title
-    customizable: boolean, // control if user can change payer wallet, and custom gas
+    customizable: boolean, // control whether user can select payer wallet and custom gas
   }
 ```
 
@@ -262,7 +240,7 @@ var params = {
 
   imToken.callAPI('transaction.tokenPay', params, function (err, hash) {
     if (err) {
-      alert(err)
+      alert(err.message)
     } else {
       // return txHash of this transaction
       alert(hash)
@@ -272,16 +250,12 @@ var params = {
 
 ### user.getCurrentAccount
 > get current wallet address
-```typescript
-// @types
-  callback: function
-```
 
 ```js
 //@example
 imToken.callAPI('user.getCurrentAccount', function(err, address) {
     if(err) {
-      alert(err)
+      alert(err.message)
     } else {
       alert(address)
     }
@@ -290,18 +264,13 @@ imToken.callAPI('user.getCurrentAccount', function(err, address) {
 ```
 
 #### user.getAccountList
-> get user's wallet address list
-
-```typescript
-// @types
-  callback: function
-```
+> get user's wallet address list, return an Array of wallet address list.
 
 ```js
 //@example
 imToken.callAPI('user.getAccountList', function(err, list) {
     if(err) {
-      alert(err)
+      alert(err.message)
     } else {
       alert(list)
     }
@@ -310,14 +279,33 @@ imToken.callAPI('user.getAccountList', function(err, list) {
 ```     
 
 ### user.getAssetTokens
-> get user's assetToken list
+> get user's assetToken list, return an Array of *tokenObject* list.
+>
 > **need permission**: if user refused, you will get an err: 'user refused'.
+
+```javascript
+// *tokenObject* type
+{
+  chainType: string // ETHEREUM | BITCOIN
+  address: string  // contractAddress
+  walletAddress: string
+  symbol: string
+  decimal: number
+  unit: string
+  logo: string
+  balance: string // bigNumber, unit in decimal
+  defaultGas: string
+  price: number
+  profileUrl: string
+}
+```
+
 
 ```js
 // @example
 imToken.callAPI('user.getAssetTokens', function(err, assetTokens){
     if(err) {
-      alert(err)
+      alert(err.message)
     } else {
        alert(assetTokens.map(function(t){
         return t.symbol + ' '
@@ -342,7 +330,7 @@ return a wallet address depend on which user selected.
 // @example
 imToken.callAPI('user.showAccountSwitch', function(err, address){
     if(err) {
-      alert(err)
+      alert(err.message)
     } else {
       alert(address)
     }
@@ -350,14 +338,27 @@ imToken.callAPI('user.showAccountSwitch', function(err, address){
 ```  
 
 ### user.getContacts
-> get wallet contacts of user
+> get wallet contacts of user, return an Array of *ContactObject* list.
+>
 > **need permission**: if user refused, you will get an err: 'user refused'.
+
+```js
+// *ContactObject* type
+{
+  id: string // chainType-address
+  chainType: string // ETHEREUM | BITCOIN
+  description: string
+  name: string
+  address: string
+  timestamp: number
+}
+```
 
 ```js
 //@example
 imToken.callAPI('user.getContacts', function(err, contacts) {
      if(err) {
-       alert(err)
+       alert(err.message)
      } else {
        alert(contacts)
      }
@@ -366,9 +367,17 @@ imToken.callAPI('user.getContacts', function(err, contacts) {
 ```  
 
 ### user.getProfile
-> get user profile, like username、avatar、kyc info...
+> get user profile, return a `ProfileObject`, contains username、avatar、kyc... etc.
 >
 > **need permission**: if user refused, you will get an err: 'user refused'.
+
+```js
+// *ProfileObject*
+{
+  name: string
+  avatar: string
+}
+```
 
 
 ```js
@@ -376,7 +385,7 @@ imToken.callAPI('user.getContacts', function(err, contacts) {
 imToken.callAPI('user.getProfile', function(err, profile) {
   // TODO: profile detail
      if(err) {
-       alert(err)
+       alert(err.message)
      } else {
        alert(profile)
      }
