@@ -94,6 +94,29 @@ imToken.callAPI('native.confirm', {
 })
 ```
 
+### native.selectPicture
+> select a picture from library or take a photo, will return image data in base64.
+```typescript
+//@types
+  params: {
+    maxWidth: number    // optional,  response will be corpped.
+    maxHeight: number     // optinal,  response will be corpped.
+    allowsEditing: boolean // optinal, enables built in iOS functionality to resize the image after selection
+    quality: number // optinal, 0 to 1
+  }
+```
+
+```js
+// @example
+imToken.callAPI('native.selectPicture',{maxWidth: 400, maxHeight: 200}, function (err, ret) {
+    if(err) {
+      alert(err.message)
+    } else {
+      document.getElementById('imgContainer').src = ret.data
+    }
+  })
+```
+
 ### native.setClipboard
 > set text to user clipboard
 ```typescript

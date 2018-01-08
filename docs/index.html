@@ -132,7 +132,22 @@ setTimeout(function() {
     </details>
   </section>
 
-
+  <section>
+    <button>native.selectPicture</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('native.selectPicture',{maxWidth: 400, maxHeight: 200}, function (err, ret) {
+    if(err) {
+      alert(err.message)
+    } else {
+      document.getElementById('imgContainer').src = ret.data
+    }
+  })
+      </pre>
+    </details>
+  </section>
+  <img id="imgContainer" />
 
   <section>
     <button>native.setClipboard</button>
