@@ -97,12 +97,20 @@ imToken.callAPI('native.confirm', {
 ### native.selectPicture
 > select a picture from library or take a photo, will return image data in base64.
 ```typescript
-//@types
+// @types
   params: {
     maxWidth: number    // optional,  response will be corpped.
     maxHeight: number     // optinal,  response will be corpped.
     allowsEditing: boolean // optinal, enables built in iOS functionality to resize the image after selection
     quality: number // optinal, 0 to 1
+  }
+
+// @response
+  {
+    data: string // base64 data, default prefix 'data:image/jpeg;base64,'
+    width: number // image width
+    height: number  // image height
+    fileSize: number // file size (b)
   }
 ```
 
