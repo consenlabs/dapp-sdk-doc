@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Readme.md</title>
+  <title>README.md</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- common.css -->
   <style>
@@ -408,7 +408,7 @@
 <body>
 
   <div id="titlearea">
-    <h2>README.md</h2>
+    <h2>README</h2>
   </div>
   <div id="contentarea">
     <div class="cell markdown-cell">
@@ -513,6 +513,35 @@
 </div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_storage ace_type">console</span><span class="ace_punctuation ace_operator">.</span><span class="ace_support ace_function ace_firebug">log</span><span class="ace_paren ace_lparen">(</span><span class="ace_string">'yes'</span><span class="ace_paren ace_rparen">)</span>
 </div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  <span class="ace_paren ace_rparen">}</span>
 </div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span><span class="ace_paren ace_rparen">})</span>
+</div></div></div></pre>
+      <h3>native.selectPicture</h3>
+      <blockquote>
+        <p>select a picture from library or take a photo, will return image data in base64.</p>
+      </blockquote>
+      <pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span><span class="ace_comment">// @types</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  <span class="ace_identifier">params</span><span class="ace_punctuation ace_operator">:</span> <span class="ace_paren ace_lparen">{</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">maxWidth</span>: <span class="ace_variable ace_parameter ace_function ace_ts">number</span>    <span class="ace_comment">// optional,  response will be corpped.</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">maxHeight</span>: <span class="ace_variable ace_parameter ace_function ace_ts">number</span>     <span class="ace_comment">// optinal,  response will be corpped.</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">allowsEditing</span>: <span class="ace_variable ace_parameter ace_function ace_ts">boolean</span> <span class="ace_comment">// optinal, enables built in iOS functionality to resize the image after selection</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">quality</span>: <span class="ace_variable ace_parameter ace_function ace_ts">number</span> <span class="ace_comment">// optinal, 0 to 1</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  <span class="ace_paren ace_rparen">}</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span><span class="ace_comment">// @response</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  <span class="ace_paren ace_lparen">{</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">data</span>: <span class="ace_variable ace_parameter ace_function ace_ts">string</span> <span class="ace_comment">// base64 data, default prefix 'data:image/jpeg;base64,'</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">width</span>: <span class="ace_variable ace_parameter ace_function ace_ts">number</span> <span class="ace_comment">// image width</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">height</span>: <span class="ace_variable ace_parameter ace_function ace_ts">number</span>  <span class="ace_comment">// image height</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_variable ace_parameter ace_function ace_ts">fileSize</span>: <span class="ace_variable ace_parameter ace_function ace_ts">number</span> <span class="ace_comment">// file size (b)</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  <span class="ace_paren ace_rparen">}</span>
+</div></div></div></pre>
+      <pre><div class="ace-chrome"><div class="ace_static_highlight ace_show_gutter" style="counter-reset:ace_line 0"><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span><span class="ace_comment">// @example</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span><span class="ace_identifier">imToken</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">callAPI</span><span class="ace_paren ace_lparen">(</span><span class="ace_string">'native.selectPicture'</span><span class="ace_punctuation ace_operator">,</span><span class="ace_paren ace_lparen">{</span><span class="ace_identifier">maxWidth</span><span class="ace_punctuation ace_operator">:</span> <span class="ace_constant ace_numeric">400</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_identifier">maxHeight</span><span class="ace_punctuation ace_operator">:</span> <span class="ace_constant ace_numeric">200</span><span class="ace_paren ace_rparen">}</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_storage ace_type">function</span> <span class="ace_paren ace_lparen">(</span><span class="ace_identifier">err</span><span class="ace_punctuation ace_operator">,</span> <span class="ace_identifier">ret</span><span class="ace_paren ace_rparen">)</span> <span class="ace_paren ace_lparen">{</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_keyword">if</span><span class="ace_paren ace_lparen">(</span><span class="ace_identifier">err</span><span class="ace_paren ace_rparen">)</span> <span class="ace_paren ace_lparen">{</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span><span class="ace_indent-guide">    </span>  <span class="ace_support ace_function">alert</span><span class="ace_paren ace_lparen">(</span><span class="ace_identifier">err</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">message</span><span class="ace_paren ace_rparen">)</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_paren ace_rparen">}</span> <span class="ace_keyword">else</span> <span class="ace_paren ace_lparen">{</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span><span class="ace_indent-guide">    </span>  <span class="ace_variable ace_language">document</span><span class="ace_punctuation ace_operator">.</span><span class="ace_support ace_function ace_dom">getElementById</span><span class="ace_paren ace_lparen">(</span><span class="ace_string">'imgContainer'</span><span class="ace_paren ace_rparen">)</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">src</span> <span class="ace_keyword ace_operator">=</span> <span class="ace_identifier">ret</span><span class="ace_punctuation ace_operator">.</span><span class="ace_identifier">data</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>    <span class="ace_paren ace_rparen">}</span>
+</div><div class="ace_line"><span class="ace_gutter ace_gutter-cell" unselectable="on"></span>  <span class="ace_paren ace_rparen">})</span>
 </div></div></div></pre>
       <h3>native.setClipboard</h3>
       <blockquote>
