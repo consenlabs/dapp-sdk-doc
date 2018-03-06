@@ -250,6 +250,27 @@ imToken.callAPI('transaction.tokenPay', params, function (err, hash) {
     </details>
   </section>
 
+  <section>
+    <button>transaction.personalSign</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+var params = {
+  message: '0x0000000000000000000000000000000000000000',
+  address: web3.eth.defaultAccount,
+}
+
+imToken.callAPI('transaction.personalSign', params, function (err, hash) {
+  if (err) {
+    alert(err)
+  } else {
+    alert(hash)
+  }
+})
+      </pre>
+    </details>
+  </section>
+
 
   <section>
     <button>user.getCurrentAccount</button>
