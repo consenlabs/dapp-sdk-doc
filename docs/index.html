@@ -251,6 +251,38 @@ imToken.callAPI('transaction.tokenPay', params, function (err, hash) {
   </section>
 
   <section>
+    <button>transaction.signTransaction</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+var params = {
+  mode: 'signOnly',
+  chainType: 'ETHEREUM',
+  chainID: 42,
+  symbol: 'ETH',
+  from: web3.eth.defaultAccount,
+  to: '0x0fa38abec02bd4dbb87f189df50b674b9db0b468',
+  memo: 'imtoken signTransaction',
+  contractAddress: '0x0000000000000000000000000000000000000000',
+  value: '1250000000000000',
+  nonce: 43,
+  orderInfo: 'buy a cup of coffee',
+  customizable: true
+}
+
+imToken.callAPI('transaction.signTransaction', params, function (err, hash) {
+  if (err) {
+    alert(err)
+  } else {
+    alert(hash)
+  }
+})
+      </pre>
+    </details>
+  </section>
+
+
+  <section>
     <button>transaction.personalSign</button>
     <details>
       <summary>show code</summary>
