@@ -254,7 +254,7 @@ imToken.callAPI('navigator.toggleNavbar')
     from: string, 
     value: string, // bigNumber string,  unit in decimal
     orderInfo: string, // pay modal title
-    customizable: boolean, // control whether user can select payer wallet and custom gas
+    feeCustomizable: boolean, // control whether user can select payer wallet and custom gas
   }
 ```
 
@@ -266,7 +266,7 @@ var params = {
     from: web3.eth.defaultAccount,
     value: '1250000000000000',
     orderInfo: 'buy a cup of coffee',
-    customizable: true,
+    feeCustomizable: true,
   }
 
   imToken.callAPI('transaction.tokenPay', params, function (err, hash) {
