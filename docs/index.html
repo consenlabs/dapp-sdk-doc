@@ -38,7 +38,21 @@
       border-radius: 3px;
       white-space: pre-wrap;
     }
+	  
+	  button {
+		  padding: 10px 20px;
+		  display: block;
+			background: #ccf;
+			font-size: 16px;
+	  }
   </style>
+	<script src='https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js'></script>
+	<script>
+	window.web3 = new Web3(window.ethereum)
+	window.ethereum.enable().then(accounts => {
+		window.accounts = accounts
+	})
+	</script>
 </head>
 
 <body>
@@ -47,6 +61,7 @@
   <img src="data:image/png;base64,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"
   />
   <i>Use imToken2.0 DApp browser scan this qrCode to view exmaples.</i>
+	
 
   <section>
     <button>navigator.closeDapp</button>
@@ -74,6 +89,38 @@ imToken.callAPI('navigator.goBack')
       <summary>show code</summary>
       <pre>
 imToken.callAPI('navigator.toggleNavbar')
+      </pre>
+    </details>
+  </section>
+	
+	<section>
+    <button>navigator.getOrientation</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('navigator.getOrientation', function(err, result) {
+	alert(result)
+})
+      </pre>
+    </details>
+  </section>
+	
+	<section>
+    <button>navigator.setOrientation landscape</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('navigator.setOrientation', 'landscape')
+      </pre>
+    </details>
+  </section>
+	
+	<section>
+    <button>navigator.setOrientation portrait</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('navigator.setOrientation', 'portrait')
       </pre>
     </details>
   </section>
@@ -127,7 +174,7 @@ imToken.callAPI('native.toastInfo', '123456789')
 imToken.callAPI('native.showLoading', 'loading！');
 setTimeout(function() {
     imToken.callAPI('native.hideLoading')
-}, 3000)
+}, 2000)
       </pre>
     </details>
   </section>
@@ -197,42 +244,13 @@ imToken.callAPI('native.scanQRCode', function (err, ret) {
 
 
   <section>
-    <button>native.setCalEvent</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('native.setCalEvent', {
-  title: 'test save event',
-  settings : {
-    notes: 'go to china this night',
-    startDate: '2017-09-28T19:42:00.000Z',
-    endDate: '2017-09-28T09:19:44.000Z',
-    alarms: [{
-      date: -1 //ios only
-    }]
-  }
-}, function(err, id) {
-  if(err) {
-    alert(err)
-  } else {
-    alert(id)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-
-
-
-  <section>
     <button>transaction.tokenPay</button>
     <details>
       <summary>show code</summary>
       <pre>
 var params = {
-  to: '0x0fa38abec02bd4dbb87f189df50b674b9db0b468',
-  from: web3.eth.defaultAccount,
+  to: '0xD9bcf1e096e1C4adD0d587c1E9c620C1072326d4',
+  from: window.accounts[0],
   value: '1250000000000000',
   orderInfo: 'buy a cup of coffee',
   feeCustomizable: true
@@ -255,43 +273,13 @@ imToken.callAPI('transaction.tokenPay', params, function (err, hash) {
       <summary>show code</summary>
       <pre>
 var params = {
-  mode: 'signOnly',
-  chainType: 'ETHEREUM',
-  chainID: 42,
-  symbol: 'ETH',
-  from: web3.eth.defaultAccount,
-  to: '0x0fa38abec02bd4dbb87f189df50b674b9db0b468',
-  memo: 'imtoken signTransaction',
-  contractAddress: '0x0000000000000000000000000000000000000000',
+  from: window.accounts[0],
+  to: '0xD9bcf1e096e1C4adD0d587c1E9c620C1072326d4',
   value: '1250000000000000',
-  nonce: 43,
-  orderInfo: 'buy a cup of coffee',
-  customizable: true
+  orderInfo: 'signTransaction',
 }
 
 imToken.callAPI('transaction.signTransaction', params, function (err, hash) {
-  if (err) {
-    alert(err)
-  } else {
-    alert(hash)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-
-  <section>
-    <button>transaction.personalSign</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-var params = {
-  message: '0x0000000000000000000000000000000000000000',
-  address: web3.eth.defaultAccount,
-}
-
-imToken.callAPI('transaction.personalSign', params, function (err, hash) {
   if (err) {
     alert(err)
   } else {
@@ -337,67 +325,18 @@ imToken.callAPI('user.getAccountList', function(err, list) {
   </section>
 
   <section>
-    <button>user.getAssetTokens</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('user.getAssetTokens', function(err, assetTokens){
-  if(err) {
-    alert(err)
-  } else {
-      alert(assetTokens.map(function(t){
-      return t.symbol + ' '
-    }))
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-  <section>
     <button>user.showAccountSwitch</button>
     <details>
       <summary>show code</summary>
       <pre>
 imToken.callAPI('user.showAccountSwitch', {
   contractAddress: '0x0000000000000000000000000000000000000000',
+  // Note: contractAddress param will remove in the next version. 
 }, function(err, address) {
   if(err) {
     alert(err)
   } else {
     alert(address)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-  <section>
-    <button>user.getContacts</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('user.getContacts', function(err, contacts) {
-  if(err) {
-    alert(err)
-  } else {
-    alert(contacts)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-  <section>
-    <button>user.getProfile</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('user.getProfile', function(err, profile) {
-  if(err) {
-    alert(err)
-  } else {
-    alert(profile)
   }
 })
       </pre>
@@ -441,14 +380,6 @@ imToken.callAPI('device.getCurrentCurrency', function(err, currency) {
 <script>
   window.alert = function (str) {
     imToken.callAPI('native.toastInfo', JSON.stringify(str));
-  }
-
-  if (window.imToken) {
-    alert('imToken sdk ready')
-  } else {
-    window.addEventListener('sdkReady', function () {
-      alert('imToken sdk ready')
-    })
   }
 
 
