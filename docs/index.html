@@ -127,7 +127,17 @@ imToken.callAPI('navigator.setOrientation', 'portrait')
   </section>
 
   <section>
-    <button>navigator.configure portrait custom</button>
+    <button>navigator.configure {orientation: 'portrait', navigationStyle: 'default'}</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+      imToken.callAPI('navigator.configure', {orientation: 'portrait', navigationStyle: 'default'})
+            </pre>
+    </details>
+  </section>
+
+  <section>
+    <button>navigator.configure {orientation: 'portrait', navigationStyle: 'custom'}</button>
     <details>
       <summary>show code</summary>
       <pre>
@@ -137,11 +147,21 @@ imToken.callAPI('navigator.setOrientation', 'portrait')
   </section>
 
   <section>
-    <button>navigator.configure landscape custom</button>
+    <button>navigator.configure {orientation: 'landscape', navigationStyle: 'default'}</button>
     <details>
       <summary>show code</summary>
       <pre>
-  imToken.callAPI('navigator.configure', {orientation: 'landscape', navigatorStyle: 'custom'})
+    imToken.callAPI('navigator.configure', {orientation: 'landscape', navigationStyle: 'default'})
+          </pre>
+    </details>
+  </section>
+
+  <section>
+    <button>navigator.configure {orientation: 'landscape', navigationStyle: 'custom'}</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+  imToken.callAPI('navigator.configure', {orientation: 'landscape', navigationStyle: 'custom'})
         </pre>
     </details>
   </section>
