@@ -200,6 +200,22 @@ imToken.callAPI('native.alert', 'winner winner, chicken dinner！')
   </section>
 
   <section>
+    <button>native.toast</button>
+    <details>
+      <summary>show code</summary>
+      <pre>
+imToken.callAPI('native.toast', {
+  type: 'info',
+  message: 'hello world',
+  align: 'top',
+  model: 'banner',
+  duration: 1000 * 1
+})
+      </pre>
+    </details>
+  </section>
+
+  <section>
     <button>native.confirm</button>
     <details>
       <summary>show code</summary>
@@ -215,7 +231,7 @@ imToken.callAPI('native.confirm', {
     } else {
       alert('user confirmed')
     }
-})          
+})
       </pre>
     </details>
   </section>
@@ -395,7 +411,7 @@ imToken.callAPI('user.getAccountList', function(err, list) {
       <pre>
 imToken.callAPI('user.showAccountSwitch', {
   contractAddress: '0x0000000000000000000000000000000000000000',
-  // Note: contractAddress param will remove in the next version. 
+  // Note: contractAddress param will remove in the next version.
 }, function(err, address) {
   if(err) {
     alert(err)
