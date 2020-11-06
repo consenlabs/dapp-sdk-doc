@@ -199,65 +199,6 @@ imToken.callAPI('native.alert', 'winner winner, chicken dinner！')
     </details>
   </section>
 
-  <section>
-    <button>native.toast</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('native.toast', {
-  type: 'info',
-  message: 'hello world',
-  align: 'top',
-  model: 'banner',
-  duration: 1000 * 1
-})
-      </pre>
-    </details>
-  </section>
-
-  <section>
-    <button>native.confirm</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('native.confirm', {
-    title: 'this is title',
-    message: 'this is a long message',
-    cancelText: 'cancel',
-    confirmText: 'confirm'
-}, function (err, result) {
-    if(err) {
-      alert('user canceled')
-    } else {
-      alert('user confirmed')
-    }
-})
-      </pre>
-    </details>
-  </section>
-
-  <section>
-    <button>native.toastInfo(deprecated)</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('native.toastInfo', '123456789')
-      </pre>
-    </details>
-  </section>
-
-  <section>
-    <button>native.showLoading</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('native.showLoading', 'loading！');
-setTimeout(function() {
-    imToken.callAPI('native.hideLoading')
-}, 2000)
-      </pre>
-    </details>
-  </section>
 
   <section>
     <button>native.selectPicture</button>
@@ -322,96 +263,12 @@ imToken.callAPI('native.scanQRCode', function (err, ret) {
     </details>
   </section>
 
-
-  <section>
-    <button>transaction.tokenPay</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-var params = {
-  to: '0xD9bcf1e096e1C4adD0d587c1E9c620C1072326d4',
-  from: window.accounts[0],
-  value: '1250000000000000',
-  orderInfo: 'buy a cup of coffee',
-  feeCustomizable: true
-}
-
-imToken.callAPI('transaction.tokenPay', params, function (err, hash) {
-  if (err) {
-    alert(err)
-  } else {
-    alert(hash)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-  <section>
-    <button>transaction.signTransaction</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-var params = {
-  from: window.accounts[0],
-  to: '0xD9bcf1e096e1C4adD0d587c1E9c620C1072326d4',
-  value: '1250000000000000',
-  orderInfo: 'signTransaction',
-}
-
-imToken.callAPI('transaction.signTransaction', params, function (err, hash) {
-  if (err) {
-    alert(err)
-  } else {
-    alert(hash)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-
-  <section>
-    <button>user.getCurrentAccount</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('user.getCurrentAccount', function(err, address) {
-  if(err) {
-    alert(err)
-  } else {
-    alert(address)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
-
-  <section>
-    <button>user.getAccountList</button>
-    <details>
-      <summary>show code</summary>
-      <pre>
-imToken.callAPI('user.getAccountList', function(err, list) {
-  if(err) {
-    alert(err)
-  } else {
-    alert(list)
-  }
-})
-      </pre>
-    </details>
-  </section>
-
   <section>
     <button>user.showAccountSwitch</button>
     <details>
       <summary>show code</summary>
       <pre>
 imToken.callAPI('user.showAccountSwitch', {
-  contractAddress: '0x0000000000000000000000000000000000000000',
-  // Note: contractAddress param will remove in the next version.
 }, function(err, address) {
   if(err) {
     alert(err)
